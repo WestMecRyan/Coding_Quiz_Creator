@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 4 Quiz 1 Questions</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+    <style>
+        pre {
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="quiz-container">
+
+    </div>
+    <!-- multiple choice questions here  -->
+    <script>
+        fetch('test_questions_template.json', {
+            // fetch('lambda_res.json', {
+            // fetch('https://yuyqx4egq6.execute-api.us-east-2.amazonaws.com/prod/files/unit4_exam.json', {
+            //     method: 'GET',
+            //     headers: {
+            //         'x-api-key': 'Vlz5ZhbhI95MjgBm4etpo1GB5l6T94Qa1vXlKSYu'
+            //     }
+        })
+            .then(response => response.json())
+            // .then(response => {
+            // console.log(response); // Log the entire response to see its structure
+            // // Assume the array is directly within the response object, no 'data' property in this case
+            // if (Array.isArray(response)) {
+            //     return response; // If the response is an array, return it as-is
+            // } else if (response && Array.isArray(response.data)) {
+            //     // If 'response.data' is the array
+            //     return response.data; // Return just the 'data' array
+            // } else {
+            //     // If the response is not in the expected format, throw an error or return an empty array
+            //     throw new Error("Unexpected response format");
+            // }
+            // return JSON.parse(response.data);
+            // })
+            .then(questions => {
+                // questions.sort(() => Math.random() - 0.5);
+                // console.log(questions);
+                // Render the questions and options
+                questions.forEach(question => {
+                    const questionElement = document.createElement('div');
+                    questionElement.classList.add('question');
+                    questionElement.innerHTML = `<h3>${question.questionName}: ${question.question}</h3>`;
+
+
+                    // Here we are directly using the randomized options that were sent from the server
+                    question.options.forEach((option, index) => {
+                        const isCorrect = true;
+                        // const isCorrect = index === question.correctIndex; // assuming the correct index is sent for each question
+                        const optionContainer = document.createElement('div');
+                        const radioHtml = `<input type="radio" id="option${question.id}-${index}" name="question${question.id}" value="${index}">
+                <label for="option${question.id}-${index}" style="${isCorrect ? '' : ''}">${index + 1}: 
+                    <pre><code class="${question.optionLang}">${option}</code></pre>
+                </label>`;
+                        optionContainer.classList.add('option');
+                        optionContainer.innerHTML = radioHtml;
+                        questionElement.appendChild(optionContainer);
+                    });
+                    document.getElementById('quiz-container').appendChild(questionElement);
+                });
+                document.querySelectorAll('pre code').forEach(block => {
+                    hljs.highlightAll();
+
+                });
+
+            })
+            .catch(error => console.error('Error loading questions:', error));
+    </script>
+
+</body>
+
+</html>

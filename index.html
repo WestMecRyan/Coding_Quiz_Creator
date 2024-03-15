@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 4 Quiz 1 Questions</title>
+    <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css"> -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <style>
+        pre {
+            display: inline-block;
+        }
+
+        div.option {
+            display: flex;
+            align-items: center;
+        }
+
+        div.option label div {
+            display: flex;
+            align-items: center;
+        }
+
+        div.option label div span {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="quiz-container">
+
+    </div>
+    <!-- multiple choice questions here  -->
+    <script>
+        function hashString(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const character = str.charCodeAt(i);
+                hash = (hash << 5) - hash + character;
+                hash = hash & hash; // Convert to 32bit integer
+            }
+            return hash;
+        }
+
+        function seededRandom(seed) {
+            const x = Math.sin(seed) * 10000;
+            return x - Math.floor(x);
+        }
+
+        function shuffleArray(array, seed) {
+            const result = array.slice();
+            for (let i = result.length - 1; i > 0; i--) {
+                const j = Math.floor(seededRandom(seed + i) * (i + 1));
+                [result[i], result[j]] = [result[j], result[i]];
+            }
+            return result;
+        }
+        fetch('./quiz_bank/pre_code_test/pre_code_test.json', {
+            // headers could go here
+        })
+            .then(response => response.json())
+
+            .then(questions => {
+                // Optional: Seed-based shuffle for questions
+                // const questionsSeed = /* some consistent seed value */;
+                // const shuffledQuestions = shuffleArray(questions, questionsSeed);
+
+                // Using Math.random() for shuffle if consistent order is not needed
+                // UNCOMMENT FOR RANDOM QUESTION ORDER
+                // questions.sort(() => Math.random() - 0.5);
+
+                // Render the questions and options
+                questions.forEach(question => {
+                    const questionElement = document.createElement('div');
+                    questionElement.classList.add('question');
+                    let joinedQuestion = Array.isArray(question.question) ? question.question.join("") : "";
+                    console.log(joinedQuestion);
+                    questionElement.innerHTML = `<h3>${question.questionName}: ${joinedQuestion}</h3>`;
+
+                    // Consistently randomize the options using the questionName as a seed
+                    // const seed = hashString(question.questionName);
+                    const seed = hashString(question.questionName);
+                    const randomizedOptions = shuffleArray(question.options, seed);
+                    //Comment out for randomized option;
+                    // question.options.forEach((option, index) => {
+                    // Here we are directly using the randomized options that were sent from the server
+                    randomizedOptions.forEach((option, index) => {
+                        //UNCOMMENT FOR FIRST QUESTION ORDER
+                        // const isCorrect = true;
+                        // UNCOMMENT FOR RANDOM ANSWER ORDER
+                        const isCorrect = option === question.options[question.correctIndex]; // Check if the option is correct
+                        console.log(isCorrect);
+                        const optionContainer = document.createElement('div');
+                        const radioHtml = `<input type="radio" id="option${question.id}-${index}" name="question${question.id}" value="${index}">
+                                        <label for="option${question.id}-${index}" style="${isCorrect ? '' : ''}"><div><span>${index + 1}:</span> 
+                                            <pre><code class="${question.optionLang}">${option}</code></pre></div>
+                                        </label>`;
+                        optionContainer.classList.add('option');
+                        optionContainer.innerHTML = radioHtml;
+                        questionElement.appendChild(optionContainer);
+                    });
+
+                    document.getElementById('quiz-container').appendChild(questionElement);
+                });
+
+                // Apply syntax highlighting
+                hljs.highlightAll();
+
+            })
+            .catch(error => console.error('Error loading questions:', error));
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+[
+  {
+    "id": 1,
+    "question": "What bootstrap utility color most accurately represents the following color<br><div style='width:100px; height: 100px; background-color:red'></div>",
+    "questionName": "A",
+    "options": ["*-danger", "*-warning", "*-success", "*-info"],
+    "optionLang": "language-css",
+    "correctIndex": 0
+  },
+  {
+    "id": 2,
+    "question": "What line of code most accurately represents the following button?<br><img src='./quiz_bank/bootstrap_quiz_unit7_year1/btn-outline-primary.png' />",
+    "questionName": "B",
+    "options": ["&lt;button type='button' class='btn btn-outline-primary'>Primary&lt;\button>", "&lt;button type='button' class='btn-outline-primary'>Primary&lt;\button>", "&lt;button type='button' class='btn btn-primary-outline'>Primary&lt;\button>", "&lt;button type='button' class='btn-primary-outline'>Primary&lt;\button>"],
+    "optionLang": "language-en",
+    "correctIndex": 0
+  },
+  {
+    "id": 3,
+    "question": "Which line of code would cause a row to have a single column to be 9 widths wide and centered and then at medium breakpoint have 2 columns each 4 column widths wide with space between?",
+    "questionName": "C",
+    "options": ["<pre><code>&lt;div class='row justify-content-center justify-content-md-between'>\n&lt;div class='col-9 col-md-4'>col&lt;/div>\n&lt;div class='d-none d-md-flex col-md-4'>col&lt;/div>\n&lt;/div></pre></code>", 
+    "<pre><code>&lt;div class='row justify-content-center justify-content-md-between'>\n&lt;div class='col-9 col-md-4'>col&lt;/div>\n&lt;div class='col-md-4'>col&lt;/div>\n&lt;/div></pre></code>", 
+    "<pre><code>&lt;div class='row justify-content-center justify-content-md-space-between'>\n&lt;div class='col-9 col-md-4'>col&lt;/div>\n&lt;div class='d-none d-md-flex col-md-4'>col&lt;/div>\n&lt;/div></pre></code>", 
+    "<pre><code>&lt;div class='row justify-content-center justify-content-between'>\n&lt;div class='col-9 col-md-4'>col&lt;/div>\n&lt;div class='d-none col-md-4'>col&lt;/div>\n&lt;/div></pre></code>"],
+    "optionLang": "language-en",
+    "correctIndex": 0
+  },
+  {
+    "id": 4,
+    "question": "What is the most correct order of utility classes to build the following card?<br><image src='./quiz_bank/bootstrap_quiz_unit7_year1/card-demo.png' />",
+    "questionName": "D",
+    "options": [".card .card-img-top .card-body .card-title .card-text .btn .btn-primary", ".card-img .card-body .card-info .btn .btn-primary", ".card-body .card-img-top .card .card-text .btn .btn-primary", ".card .card-img-top .card-text .card-body .card-title .btn-primary"],
+    "optionLang": "language-css",
+    "correctIndex": 0
+  },
+  {
+    "id": 5,
+    "question": "If you want to create a custom breakpoint that extends from sm through lg, what min-width and max-width should you use?",
+    "questionName": "E",
+    "options": ["min-width: 576px, max-width: 1199px", "min-width: 350px, max-width: 1200px", "min-width: 575px, max-width: 991px", "min-width: 768px, max-width: 992px"],
+    "optionLang": "language-js",
+    "correctIndex": 0
+  },
+  {
+    "id": 6,
+    "question": "What's the most appropriate syntax to make a custom media query for the medium breakpoint?",
+    "questionName": "F",
+    "options": ["@media screen and (min-width: 768px) {}", "@media screen and (max-width: 991px) {}", "@media screen and (max-width: 768px) {}", "@media screen and (min-width: 767px) {}"],
+    "optionLang": "language-html",
+    "correctIndex": 0
+  },
+  {
+    "id": 7,
+    "question": "Which is the most appropriate way to justify something to the beginning of its written orientation?",
+    "questionName": "G",
+    "options": ["justify-content-start", "justify-content-left", "justify-start", "justify-content-begin"],
+    "optionLang": "language-css",
+    "correctIndex": 0
+  },
+  {
+    "id": 8,
+    "question": "What is the most appropriate way to vertical place content at the bottom of a row",
+    "questionName": "H",
+    "options": ["align-items-end", "align-self-bottom", "align-items-bottom", "align-content-end"],
+    "optionLang": "language-css",
+    "correctIndex": 0
+  },
+  {
+    "id": 9,
+    "question": "What's the utility class to make a shadow as wide and dark as bootstrap allows?",
+    "questionName": "I",
+    "options": [".shadow-lg", ".shadow-big", ".shadow-dark", ".lg-dark-shadow"],
+    "optionLang": "language-css",
+    "correctIndex": 0
+  },
+  {
+    "id": 10,
+    "question": "What class name would make an element have straight top and bottom and rounded sides?",
+    "questionName": "J",
+    "options": [".rounded-pill", ".pill", ".rounded", ".rounded-circle"],
+    "optionLang": "language-css",
+    "correctIndex": 0
+  }
+]
