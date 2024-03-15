@@ -1,4 +1,10 @@
-[
+{
+  "quizInfo": {
+    "title": "Unit _ _ Quiz",
+    "date": "_/__/__",
+    "description": "Quiz covering _."
+  },
+"quizQuestions": [
   {
     "id": 1,
     "question": "",
@@ -160,3 +166,4 @@
     "correctIndex": 0
   }
 ]
+}

@@ -1,162 +1,169 @@
-[
-  {
-    "id": 1,
-    "question": "",
-    "questionName": "A",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-js",
-    "correctIndex": 0
+{
+  "quizInfo": {
+    "title": "Unit 7 Regex Quiz",
+    "date": "3/15/24",
+    "description": "Quiz covering Regex topics in unit 7."
   },
-  {
-    "id": 2,
-    "question": "",
-    "questionName": "B",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-html",
-    "correctIndex": 0
-  },
-  {
-    "id": 3,
-    "question": "",
-    "questionName": "C",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-css",
-    "correctIndex": 0
-  },
-  {
-    "id": 4,
-    "question": "",
-    "questionName": "D",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-css",
-    "correctIndex": 0
-  },
-  {
-    "id": 5,
-    "question": "",
-    "questionName": "E",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-js",
-    "correctIndex": 0
-  },
-  {
-    "id": 6,
-    "question": "",
-    "questionName": "F",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-html",
-    "correctIndex": 0
-  },
-  {
-    "id": 7,
-    "question": "",
-    "questionName": "G",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-css",
-    "correctIndex": 0
-  },
-  {
-    "id": 8,
-    "question": "",
-    "questionName": "H",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-css",
-    "correctIndex": 0
-  },
-  {
-    "id": 9,
-    "question": "",
-    "questionName": "I",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-css",
-    "correctIndex": 0
-  },
-  {
-    "id": 10,
-    "question": "",
-    "questionName": "J",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-css",
-    "correctIndex": 0
-  },
-  {
-    "id": 11,
-    "question": "",
-    "questionName": "K",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-js",
-    "correctIndex": 0
-  },
-  {
-    "id": 12,
-    "question": "",
-    "questionName": "L",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-html",
-    "correctIndex": 0
-  },
-  {
-    "id": 13,
-    "question": "",
-    "questionName": "M",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-css",
-    "correctIndex": 0
-  },
-  {
-    "id": 14,
-    "question": "",
-    "questionName": "N",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-css",
-    "correctIndex": 0
-  },
-  {
-    "id": 15,
-    "question": "",
-    "questionName": "O",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-js",
-    "correctIndex": 0
-  },
-  {
-    "id": 16,
-    "question": "",
-    "questionName": "P",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-html",
-    "correctIndex": 0
-  },
-  {
-    "id": 17,
-    "question": "",
-    "questionName": "Q",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-css",
-    "correctIndex": 0
-  },
-  {
-    "id": 18,
-    "question": "",
-    "questionName": "R",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-css",
-    "correctIndex": 0
-  },
-  {
-    "id": 19,
-    "question": "",
-    "questionName": "S",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-css",
-    "correctIndex": 0
-  },
-  {
-    "id": 20,
-    "question": "",
-    "questionName": "T",
-    "options": ["1", "2", "3", "4"],
-    "optionLang": "language-css",
-    "correctIndex": 0
-  }
-]
+  "quizQuestions": [
+    {
+      "id": 1,
+      "question": "",
+      "questionName": "A",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-js",
+      "correctIndex": 0
+    },
+    {
+      "id": 2,
+      "question": "",
+      "questionName": "B",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-html",
+      "correctIndex": 0
+    },
+    {
+      "id": 3,
+      "question": "",
+      "questionName": "C",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-css",
+      "correctIndex": 0
+    },
+    {
+      "id": 4,
+      "question": "",
+      "questionName": "D",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-css",
+      "correctIndex": 0
+    },
+    {
+      "id": 5,
+      "question": "",
+      "questionName": "E",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-js",
+      "correctIndex": 0
+    },
+    {
+      "id": 6,
+      "question": "",
+      "questionName": "F",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-html",
+      "correctIndex": 0
+    },
+    {
+      "id": 7,
+      "question": "",
+      "questionName": "G",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-css",
+      "correctIndex": 0
+    },
+    {
+      "id": 8,
+      "question": "",
+      "questionName": "H",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-css",
+      "correctIndex": 0
+    },
+    {
+      "id": 9,
+      "question": "",
+      "questionName": "I",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-css",
+      "correctIndex": 0
+    },
+    {
+      "id": 10,
+      "question": "",
+      "questionName": "J",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-css",
+      "correctIndex": 0
+    },
+    {
+      "id": 11,
+      "question": "",
+      "questionName": "K",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-js",
+      "correctIndex": 0
+    },
+    {
+      "id": 12,
+      "question": "",
+      "questionName": "L",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-html",
+      "correctIndex": 0
+    },
+    {
+      "id": 13,
+      "question": "",
+      "questionName": "M",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-css",
+      "correctIndex": 0
+    },
+    {
+      "id": 14,
+      "question": "",
+      "questionName": "N",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-css",
+      "correctIndex": 0
+    },
+    {
+      "id": 15,
+      "question": "",
+      "questionName": "O",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-js",
+      "correctIndex": 0
+    },
+    {
+      "id": 16,
+      "question": "",
+      "questionName": "P",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-html",
+      "correctIndex": 0
+    },
+    {
+      "id": 17,
+      "question": "",
+      "questionName": "Q",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-css",
+      "correctIndex": 0
+    },
+    {
+      "id": 18,
+      "question": "",
+      "questionName": "R",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-css",
+      "correctIndex": 0
+    },
+    {
+      "id": 19,
+      "question": "",
+      "questionName": "S",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-css",
+      "correctIndex": 0
+    },
+    {
+      "id": 20,
+      "question": "",
+      "questionName": "T",
+      "options": ["1", "2", "3", "4"],
+      "optionLang": "language-css",
+      "correctIndex": 0
+    }
+  ]
+}
