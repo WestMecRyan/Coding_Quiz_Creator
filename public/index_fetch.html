@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unit 4 Quiz 1 Questions</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css"> -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
@@ -28,13 +30,18 @@
         div.option label div span {
             font-weight: bold;
             font-size: 1.2rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
         }
     </style>
 </head>
 
 <body>
-    <div id="quiz-container">
+    <div class="container">
 
+        <div id="quiz-container" class="row">
+
+        </div>
     </div>
     <!-- multiple choice questions here  -->
     <script>
@@ -61,12 +68,33 @@
             }
             return result;
         }
-        fetch('./quiz_bank/pre_code_test/pre_code_test.json', {
+        fetch('./quiz_bank/regex_quiz/regex_quiz_C.json', {
+            // fetch('test_questions_template.json', {
             // headers could go here
         })
             .then(response => response.json())
 
-            .then(questions => {
+            .then(data => {
+                // Extract quiz info and questions from the data
+                const quizInfo = data.quizInfo;
+                const questions = data.quizQuestions;
+
+                // Create elements for the quiz title, date, and description
+                const titleElement = document.createElement('h1');
+                titleElement.textContent = quizInfo.title;
+
+                const dateElement = document.createElement('p');
+                dateElement.textContent = `Date: ${quizInfo.date}`;
+
+                const descriptionElement = document.createElement('p');
+                descriptionElement.textContent = quizInfo.description;
+
+                // Append the quiz info elements to the quiz container
+                const container = document.querySelector('.container');
+                const quizContainer = document.getElementById('quiz-container');
+                document.body.prepend(descriptionElement);
+                document.body.prepend(dateElement);
+                document.body.prepend(titleElement);
                 // Optional: Seed-based shuffle for questions
                 // const questionsSeed = /* some consistent seed value */;
                 // const shuffledQuestions = shuffleArray(questions, questionsSeed);
@@ -79,13 +107,14 @@
                 questions.forEach(question => {
                     const questionElement = document.createElement('div');
                     questionElement.classList.add('question');
-                    let joinedQuestion = Array.isArray(question.question) ? question.question.join("") : "";
+                    let joinedQuestion = Array.isArray(question.question) ? question.question.join("") : question.question;
                     console.log(joinedQuestion);
                     questionElement.innerHTML = `<h3>${question.questionName}: ${joinedQuestion}</h3>`;
 
                     // Consistently randomize the options using the questionName as a seed
                     // const seed = hashString(question.questionName);
-                    const seed = hashString(question.questionName);
+                    console.log(quizInfo.extension);
+                    const seed = hashString(question.questionName.concat(quizInfo.seedExtension).concat(quizInfo.version));
                     const randomizedOptions = shuffleArray(question.options, seed);
                     //Comment out for randomized option;
                     // question.options.forEach((option, index) => {
@@ -98,7 +127,7 @@
                         console.log(isCorrect);
                         const optionContainer = document.createElement('div');
                         const radioHtml = `<input type="radio" id="option${question.id}-${index}" name="question${question.id}" value="${index}">
-                                        <label for="option${question.id}-${index}" style="${isCorrect ? '' : ''}"><div><span>${index + 1}:</span> 
+                                        <label for="option${question.id}-${index}" style="${isCorrect ? 'background-color: transparent' : ''}"><div><span>${index + 1}:</span> 
                                             <pre><code class="${question.optionLang}">${option}</code></pre></div>
                                         </label>`;
                         optionContainer.classList.add('option');

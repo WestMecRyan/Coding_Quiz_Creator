@@ -1,0 +1,66 @@
+//XHR Version
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 4 Quiz 1 Questions</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css"> -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <style>
+        pre {
+            display: inline-block;
+        }
+
+        div.option {
+            display: flex;
+            align-items: center;
+        }
+
+        div.option label div {
+            display: flex;
+            align-items: center;
+        }
+
+        div.option label div span {
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    hello
+    <div class="container">
+
+        <div id="quiz-container" class="row">
+
+        </div>
+    </div>
+    <!-- multiple choice questions here  -->
+    <script>
+        function fetchQuiz(){
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:3000/process-quiz', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.status === 200 && xhr.readyState === 4) {
+               const data = xhr.responseText; 
+            } else {
+                console.error('something went wrong', xhr.statusText);
+            } 
+        }
+        xhr.send();
+    }
+    </script>
+
+</body>
+
+</html>
