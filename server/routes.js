@@ -1,9 +1,9 @@
-const express = require('express');
-const path = require('path');
-const fs = require('fs');
+const express = require("express");
+const path = require("path");
+const fs = require("fs");
 const router = express.Router();
 
-const quizzesPath = path.join(__dirname, '..', 'quiz_bank');
+const quizzesPath = path.join(__dirname, "..", "quiz_bank");
 
 function hashString(str) {
   let hash = 0;
@@ -28,17 +28,60 @@ function shuffleArray(array, seed) {
   }
   return result;
 }
-router.get('/process-quiz', (req, res) => {
-    fs.readFile(path.join(quizzesPath, 'XHR_GET_Requests', 'xhr_quiz_1.json'), 'utf8', (err, data) => { 
-        if (err) { 
-            console.error(err);
-            return res.status(500).send('An error occured');
-        }
-        const quiz = JSON.parse(data);
-       
-        res.json(quiz);
-    });
-    
- });
+router.get("/process-quiz", (req, res) => {
+  fs.readFile(
+    path.join(quizzesPath, "XHR_GET_Requests", "xhr_quiz_1.json"),
+    "utf8",
+    (err, data) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("An error occurred");
+      }
+      let quiz = JSON.parse(data);
+      const quizInfo = quiz.quizInfo;
+      let questions = quiz.quizQuestions;
 
- module.exports = router;
+      // Sort questions by questionName for logging
+      const sortedQuestions = [...questions].sort((a, b) =>
+        a.questionName.localeCompare(b.questionName)
+      );
+
+      // Log correct answers in order
+      sortedQuestions.forEach((question) => {
+        const correctOption = question.options[question.correctIndex];
+        console.log(
+          `Correct answer for "${question.questionName}": ${correctOption}`
+        );
+      });
+      // Optional: Shuffle the order of the questions
+      questions = shuffleArray(questions, Math.random());
+
+      // Process each question
+      questions = questions.map((question) => {
+        const seed = hashString(
+          question.questionName.concat(quizInfo.seedExtension)
+        );
+        // Shuffle the options
+        const randomizedOptions = shuffleArray(question.options, seed);
+        const correctOption = question.options[question.correctIndex];
+        // Create a new object for the question without the 'correctIndex'
+        
+        return {
+          id: question.id,
+          questionName: question.questionName,
+          question: question.question,
+          options: randomizedOptions, // Use the shuffled options
+          optionLang: question.optionLang,
+        };
+      });
+
+      // Send the processed quiz data without the correct answers
+      res.json({
+        quizInfo: quizInfo,
+        quizQuestions: questions,
+      });
+    }
+  );
+});
+
+module.exports = router;
