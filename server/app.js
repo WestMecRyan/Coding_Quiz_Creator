@@ -5,10 +5,10 @@ const fs = require("fs");
 const path = require("path");
 const quizRoutes = require("./routes");
 //app.use(cors());
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, '..', 'public')));
 const port = 3001;
 
-const publicPath = path.join(__dirname, "..", "public");
+//const publicPath = path.join(__dirname, "..", "public");
 //app.use('/', quizRoutes);
 // app.get("/", (req, res) => {
 //   res.sendFile(path.join(publicPath, "index.html"));
