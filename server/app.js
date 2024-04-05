@@ -13,6 +13,6 @@ app.use('/', quizRoutes);
 // app.get("/", (req, res) => {
 //   res.sendFile(path.join(publicPath, "index.html"));
 // });
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`app is listening on port ${3000}`);
 });
