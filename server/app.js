@@ -6,7 +6,7 @@ const path = require("path");
 const quizRoutes = require("./routes");
 app.use(cors());
 app.use(express.static(path.join(__dirname, '..', 'public')));
-const port = 3001;
+const port = 3000;
 
 //const publicPath = path.join(__dirname, "..", "public");
 //app.use('/', quizRoutes);
@@ -14,5 +14,5 @@ const port = 3001;
 //   res.sendFile(path.join(publicPath, "index.html"));
 // });
 app.listen(port, () => {
-  console.log(`app is listening on port ${3001}`);
+  console.log(`app is listening on port ${3000}`);
 });
