@@ -42,6 +42,8 @@
   </head>
 
   <body>
+
+    hello
     <div class="container">
       <div id="quiz-container"></div>
     </div>
@@ -51,9 +53,10 @@
 
       function fetchQuiz() {
         const xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://localhost:3000/process-quiz", true);
+        xhr.open("GET", "/process-quiz", true);
         xhr.onload = function () {
           if (xhr.status === 200) {
+            console.log('success')
             const data = JSON.parse(xhr.responseText);
             renderQuiz(data);
           } else {

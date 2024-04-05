@@ -1,23 +1,19 @@
 const express = require("express");
-const path = require("path");
-const fs = require("fs");
+const axios = require('axios');
 const router = express.Router();
-
-const quizzesPath = path.join(__dirname, "..", "quiz_bank");
-
+const HttpClient = require("./HttpClient");
 function hashString(str) {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     const character = str.charCodeAt(i);
     hash = (hash << 5) - hash + character;
-    hash = hash & hash; // Convert to 32bit integer
+    hash &= hash; // Convert to 32bit integer
   }
   return hash;
 }
 
 function seededRandom(seed) {
-  const x = Math.sin(seed) * 10000;
-  return x - Math.floor(x);
+  return Math.sin(seed) * 10000 - Math.floor(Math.sin(seed) * 10000);
 }
 
 function shuffleArray(array, seed) {
@@ -28,60 +24,46 @@ function shuffleArray(array, seed) {
   }
   return result;
 }
-router.get("/process-quiz", (req, res) => {
-  fs.readFile(
-    path.join(quizzesPath, "XHR_GET_Requests", "xhr_quiz_1.json"),
-    "utf8",
-    (err, data) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).send("An error occurred");
-      }
-      let quiz = JSON.parse(data);
-      const quizInfo = quiz.quizInfo;
-      let questions = quiz.quizQuestions;
 
-      // Sort questions by questionName for logging
-      const sortedQuestions = [...questions].sort((a, b) =>
-        a.questionName.localeCompare(b.questionName)
-      );
+router.get("/process-quiz", async (req, res) => {
+    console.log('trying');
 
-      // Log correct answers in order
-      sortedQuestions.forEach((question) => {
-        const correctOption = question.options[question.correctIndex];
-        console.log(
-          `Correct answer for "${question.questionName}": ${correctOption}`
-        );
-      });
-      // Optional: Shuffle the order of the questions
-      questions = shuffleArray(questions, Math.random());
+  try {
+    const quizPath = "quiz_bank/XHR_GET_Requests/xhr_quiz_1.json"; // Adjust the path as necessary
+    const response = await HttpClient.getQuiz(quizPath);
 
-      // Process each question
-      questions = questions.map((question) => {
-        const seed = hashString(
-          question.questionName.concat(quizInfo.seedExtension)
-        );
-        // Shuffle the options
-        const randomizedOptions = shuffleArray(question.options, seed);
-        const correctOption = question.options[question.correctIndex];
-        // Create a new object for the question without the 'correctIndex'
-        
-        return {
-          id: question.id,
-          questionName: question.questionName,
-          question: question.question,
-          options: randomizedOptions, // Use the shuffled options
-          optionLang: question.optionLang,
-        };
+    const content = Buffer.from(response.data.content, 'base64').toString('utf8');
+    const quiz = JSON.parse(content);
+    // const json = await response.json();
+    // const content = Buffer.from(json.content, 'base64').toString('utf8');
+    // const quiz = JSON.parse(content);
+    const { quizInfo, quizQuestions } = quiz;
+
+    // Log correct answers in order
+    quizQuestions.sort((a, b) => a.questionName.localeCompare(b.questionName))
+      .forEach(question => {
+        console.log(`Correct answer for "${question.questionName}": ${question.options[question.correctIndex]}`);
       });
 
-      // Send the processed quiz data without the correct answers
-      res.json({
-        quizInfo: quizInfo,
-        quizQuestions: questions,
-      });
-    }
-  );
+    // Shuffle the order of the questions
+    const questions = shuffleArray(quizQuestions, Math.random()).map(question => {
+      const seed = hashString(question.questionName.concat(quizInfo.seedExtension));
+      const randomizedOptions = shuffleArray(question.options, seed);
+
+      return {
+        id: question.id,
+        questionName: question.questionName,
+        question: question.question,
+        options: randomizedOptions,
+        optionLang: question.optionLang,
+      };
+    });
+
+    res.json({ quizInfo, quizQuestions: questions });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error while fetching quiz data');
+  }
 });
 
 module.exports = router;
