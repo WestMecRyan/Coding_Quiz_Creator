@@ -2,7 +2,7 @@
 const axios = require('axios');
 // Assuming you have set these environment variables in your Codespace
 const githubEndpoint = "https://api.github.com/repos/WestMecRyan/Quiz_Banks/contents/";
-const personalAccessToken = process.env.PERSONAL_PAT; // Ensure this is set in your environment
+const personalAccessToken = process.env.QUIZ_ACCESS; // Ensure this is set in your environment
 
 // Setting up axios to include your GitHub Personal Access Token for requests to GitHub
 axios.interceptors.request.use(config => {
