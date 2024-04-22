@@ -4,6 +4,7 @@ const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
 const quizRoutes = require("./routes");
+require('dotenv').config();
 app.use(cors());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 const port = 3000;

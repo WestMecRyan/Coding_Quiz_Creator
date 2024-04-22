@@ -18,46 +18,47 @@ function seededRandom(seed) {
 
 function shuffleArray(array, seed) {
   const result = array.slice();
+  let correctIndex = 0;
   for (let i = result.length - 1; i > 0; i--) {
     const j = Math.floor(seededRandom(seed + i) * (i + 1));
     [result[i], result[j]] = [result[j], result[i]];
+  if (j === correctIndex) {
+    correctIndex = i;
+  } else if (i === correctIndex) {
+    correctIndex = j;
   }
-  return result;
+}
+return { shuffled: result, correctIndex };
 }
 
 router.get("/process-quiz", async (req, res) => {
-    console.log('trying');
+  console.log('trying');
 
   try {
-    const quizPath = "quiz_bank/XHR_GET_Requests/xhr_quiz_1.json"; // Adjust the path as necessary
-    const response = await HttpClient.getQuiz(quizPath);
-
-    const content = Buffer.from(response.data.content, 'base64').toString('utf8');
-    const quiz = JSON.parse(content);
-    // const json = await response.json();
-    // const content = Buffer.from(json.content, 'base64').toString('utf8');
-    // const quiz = JSON.parse(content);
+    const quizPath = "quiz_bank/SVG_Quiz/svg_quiz.json"; // Adjust the path as necessary
+    const quiz = await HttpClient.getQuiz(quizPath);
     const { quizInfo, quizQuestions } = quiz;
 
-    // Log correct answers in order
-    quizQuestions.sort((a, b) => a.questionName.localeCompare(b.questionName))
-      .forEach(question => {
-        console.log(`Correct answer for "${question.questionName}": ${question.options[question.correctIndex]}`);
-      });
-
-    // Shuffle the order of the questions
-    const questions = shuffleArray(quizQuestions, Math.random()).map(question => {
+    const shouldShuffle = true; // Check if shuffle query parameter is set to 'true'
+    let questions = quizQuestions.map(question => {
       const seed = hashString(question.questionName.concat(quizInfo.seedExtension));
-      const randomizedOptions = shuffleArray(question.options, seed);
+      const { shuffled, correctIndex } = shuffleArray(question.options, seed);
 
+      console.log(`Question: ${question.questionName}, Correct Option: ${correctIndex+1}`);
       return {
         id: question.id,
         questionName: question.questionName,
         question: question.question,
-        options: randomizedOptions,
+        options: shuffled,
         optionLang: question.optionLang,
+        correctIndex: correctIndex  // Optionally store this for further use
       };
     });
+
+    if (shouldShuffle) {
+      // Shuffle the order of the questions if required
+      questions = shuffleArray(questions, Math.random()).shuffled;
+    }
 
     res.json({ quizInfo, quizQuestions: questions });
   } catch (error) {

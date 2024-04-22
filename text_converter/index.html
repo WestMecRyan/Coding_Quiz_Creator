@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code to text converter</title>
+    <style>
+      .container {
+        display: flex;
+        justify-content: space-around;
+      }
+      .input-output-section {
+        margin: 10px;
+      }
+      textarea,
+      div {
+        width: 400px;
+        height: 150px;
+        margin-top: 5px;
+      }
+      #text-output1,
+      #text-output2 {
+        white-space: pre-wrap; /* Maintains whitespace formatting and wraps text */
+        width: 400px;
+        height: 150px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        padding: 5px;
+        background-color: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- First Section -->
+      <div class="input-output-section">
+        <label for="code-input1">Code input 1:</label>
+        <textarea
+          id="code-input1"
+          name="code-input1"
+          rows="10"
+          cols="40"
+          placeholder="Enter code here..."
+        ></textarea>
+        <br />
+        <label
+          ><input type="checkbox" id="encodeHTML1" /> Encode HTML Special
+          Characters</label
+        >
+        <label
+          ><input type="checkbox" id="collapseSpaces1" /> Collapse Spaces to
+          None</label
+        >
+        <label
+          ><input type="checkbox" id="removeNewlines1" /> Replace New Lines with
+          '\\n'</label
+        >
+        <label
+          ><input type="checkbox" id="escapeNewlines1" /> Escape New
+          Lines</label
+        >
+        <label
+          ><input type="checkbox" id="toggleQuotes1" /> Toggle Quotes</label
+        >
+        <label for="choose-lang1"
+          >Select Language
+          <select id="choose-lang1">
+            <option value="lang-text">text</option>
+            <option value="lang-html">html</option>
+            <option value="lang-js">JS</option>
+            <option value="lang-css">CSS</option>
+          </select>
+        </label>
+        <label
+          ><input type="checkbox" id="wrap-code1" /> Wrap code in pre tag</label
+        >
+        <br />
+        <label>Text output 1</label>
+        <textarea id="text-output1"></textarea>
+      </div>
+
+      <!-- Second Section -->
+      <div class="input-output-section">
+        <label for="code-input2">Code input 2:</label>
+        <textarea
+          id="code-input2"
+          name="code-input2"
+          rows="10"
+          cols="40"
+          placeholder="Enter nested code here..."
+        ></textarea>
+        <br />
+        <label
+          ><input type="checkbox" id="encodeHTML2" /> Encode HTML Special
+          Characters</label
+        >
+        <label
+          ><input type="checkbox" id="collapseSpaces2" /> Collapse Spaces to
+          None</label
+        >
+        <label
+          ><input type="checkbox" id="removeNewlines2" /> Replace New Lines with
+          '\\n'</label
+        >
+        <label
+          ><input type="checkbox" id="escapeNewlines2" /> Escape New
+          Lines</label
+        >
+        <label
+          ><input type="checkbox" id="toggleQuotes2" /> Toggle Quotes</label
+        >
+        <label for="choose-lang2"
+          >Select Language
+          <select id="choose-lang2">
+            <option value="lang-text">text</option>
+            <option value="lang-html">html</option>
+            <option value="lang-js">JS</option>
+            <option value="lang-css">CSS</option>
+          </select>
+        </label>
+        <label
+          ><input type="checkbox" id="wrap-code2" /> Wrap code in pre tag</label
+        >
+        <br />
+        <label>Text output 2</label>
+        <div id="text-output2"></div>
+      </div>
+    </div>
+
+    <script>
+      // Setup for both sections
+      setupSection("code-input1", "text-output1");
+      setupSection("code-input2", "text-output2");
+
+      function setupSection(inputId, outputId) {
+        const inputArea = document.getElementById(inputId);
+        const outputArea = document.getElementById(outputId);
+        // Select the parent div to scope checkbox selections to the correct section
+        const section = inputArea.closest(".input-output-section");
+        const checkboxes = section.querySelectorAll('input[type="checkbox"]');
+        inputArea.addEventListener("keydown", function (e) {
+          if (e.key === "Tab") {
+            e.preventDefault();
+            let start = this.selectionStart;
+            let end = this.selectionEnd;
+            this.value =
+              this.value.substring(0, start) + "  " + this.value.substring(end);
+            this.selectionStart = this.selectionEnd = start + 2;
+          }
+        });
+
+        function processText() {
+          let text = inputArea.value;
+          const prefix = inputId.slice(-1); // Assumes ID ends in a number (1 or 2)
+
+          if (document.getElementById("encodeHTML" + prefix).checked) {
+            text = text
+              .replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/"/g, "&quot;")
+              .replace(/'/g, "&#39;");
+          }
+
+          if (document.getElementById("collapseSpaces" + prefix).checked) {
+            text = text.replace(/\s+/g, " ");
+          }
+
+          if (document.getElementById("toggleQuotes" + prefix).checked) {
+            text = text.replace(/['"]/g, (match) =>
+              match === '"' ? "'" : '"'
+            );
+          }
+
+          if (document.getElementById("removeNewlines" + prefix).checked) {
+            text = text.replace(/\r?\n|\r/g, "<br>");
+          } 
+          if (
+            document.getElementById("escapeNewlines" + prefix).checked
+          ) {
+            text = text.replace(/\r?\n|\r/g, "\\n");
+          }
+
+          if (document.getElementById("wrap-code" + prefix).checked) {
+            text = `<br><pre><code class='${
+              document.getElementById("choose-lang" + prefix).value
+            }'>${text}</code></pre><br>`;
+          }
+
+          outputArea.innerText = text;
+        }
+
+        inputArea.addEventListener("input", processText);
+        checkboxes.forEach((box) => {
+          box.addEventListener("change", processText);
+        });
+      }
+    </script>
+  </body>
+</html>
