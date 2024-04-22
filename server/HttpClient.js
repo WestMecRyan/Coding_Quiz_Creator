@@ -1,9 +1,11 @@
 // HttpClient.js
 const axios = require('axios');
+const fs = require('fs').promises;
+const path = require('path');
 // Assuming you have set these environment variables in your Codespace
 const githubEndpoint = "https://api.github.com/repos/WestMecRyan/Quiz_Banks/contents/";
-const personalAccessToken = process.env.QUIZ_ACCESS; // Ensure this is set in your environment
-
+const personalAccessToken = process.env.PERSONAL_PAT; // Ensure this is set in your environment
+const isProduction = process.env.NODE_ENV === 'production';
 // Setting up axios to include your GitHub Personal Access Token for requests to GitHub
 axios.interceptors.request.use(config => {
   if (config.url.includes(githubEndpoint)) {
@@ -14,8 +16,18 @@ axios.interceptors.request.use(config => {
   return Promise.reject(error);
 });
 
+const getQuiz = async (quizPath) => { 
+  if (isProduction) {
+    return axios.get(`${githubEndpoint}${quizPath}`).then(respones => { 
+      const content = Buffer.from(response.data.content, 'base64').toString('utf8');
+      return JSON.parse(content);
+    });
+  } else {
+    const localPath = path.resolve(__dirname, '../../Quiz_Banks', quizPath);
+    const data = await fs.readFile(localPath, 'utf8');
+    return JSON.parse(data);
+   }
+}
 module.exports = {
-    getQuiz(quizPath) {
-      return axios.get(`${githubEndpoint}${quizPath}`);
-    },
+    getQuiz,
   };

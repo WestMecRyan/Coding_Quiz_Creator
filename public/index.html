@@ -42,8 +42,6 @@
   </head>
 
   <body>
-
-    hello
     <div class="container">
       <div id="quiz-container"></div>
     </div>
@@ -56,7 +54,7 @@
         xhr.open("GET", "/process-quiz", true);
         xhr.onload = function () {
           if (xhr.status === 200) {
-            console.log('success')
+            console.log("success");
             const data = JSON.parse(xhr.responseText);
             renderQuiz(data);
           } else {
@@ -97,18 +95,23 @@
         quizQuestions.forEach((question) => {
           const questionElement = document.createElement("div");
           questionElement.classList.add("question", "mb-3");
-          questionElement.innerHTML = `<h3>${question.questionName}: ${question.question}</h3><br>`;
+          let joinedQuestion = Array.isArray(question.question)
+            ? question.question.join("")
+            : question.question;
+          questionElement.innerHTML = `<p class="h5"><b>${question.questionName}</b>: <br>${joinedQuestion}</p><br>`;
 
           question.options.forEach((option, index) => {
+            const optionNumber = index + 1;
             const optionContainer = document.createElement("div");
             optionContainer.classList.add("option", "form-check");
 
             const optionId = `option${question.id}-${index}`;
 
             const radioHtml = `
-                    <input class="form-check-input" type="radio" name="question${question.id}" id="${optionId}" value="${index}">
+             <div style='display: inline-block; background-color:yellow; padding:.2rem'><span>${optionNumber}</span></div>       
+            <input class="form-check-input" type="radio" name="question${question.id}" id="${optionId}" value="${index}">
                     <label class="form-check-label" for="${optionId}">
-                        <pre><code>${option}</code></pre>
+                       <pre><code class="${question.optionLang}">${option}</code></pre>
                     </label>
                 `;
 
