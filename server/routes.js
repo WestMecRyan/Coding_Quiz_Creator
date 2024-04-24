@@ -22,29 +22,29 @@ function shuffleArray(array, seed) {
   for (let i = result.length - 1; i > 0; i--) {
     const j = Math.floor(seededRandom(seed + i) * (i + 1));
     [result[i], result[j]] = [result[j], result[i]];
-  if (j === correctIndex) {
-    correctIndex = i;
-  } else if (i === correctIndex) {
-    correctIndex = j;
+    if (j === correctIndex) {
+      correctIndex = i;
+    } else if (i === correctIndex) {
+      correctIndex = j;
+    }
   }
-}
-return { shuffled: result, correctIndex };
+  return { shuffled: result, correctIndex };
 }
 
 router.get("/process-quiz", async (req, res) => {
   console.log('trying');
 
   try {
-    const quizPath = "quiz_bank/ITS306_ Javascript/JS_ITS306.json"; // Adjust the path as necessary
+    const quizPath = "quiz_bank/other_questions/oq1.json"; // Adjust the path as necessary
     const quiz = await HttpClient.getQuiz(quizPath);
     const { quizInfo, quizQuestions } = quiz;
 
-    const shouldShuffle = false; // Check if shuffle query parameter is set to 'true'
+    const shouldShuffle = true; // Check if shuffle query parameter is set to 'true'
     let questions = quizQuestions.map(question => {
       const seed = hashString(question.questionName.concat(quizInfo.seedExtension));
       const { shuffled, correctIndex } = shuffleArray(question.options, seed);
 
-      console.log(`Question: ${question.questionName}, Correct Option: ${correctIndex+1}`);
+      console.log(`Question: ${question.questionName}, Correct Option: ${correctIndex + 1}`);
       return {
         id: question.id,
         questionName: question.questionName,
