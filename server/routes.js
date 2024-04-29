@@ -39,7 +39,7 @@ router.get("/process-quiz", async (req, res) => {
     const quiz = await HttpClient.getQuiz(quizPath);
     const { quizInfo, quizQuestions } = quiz;
 
-    const shouldShuffle = true; // Check if shuffle query parameter is set to 'true'
+    const shouldShuffle = false; // Check if shuffle query parameter is set to 'true'
     let questions = quizQuestions.map(question => {
       const seed = hashString(question.questionName.concat(quizInfo.seedExtension));
       const { shuffled, correctIndex } = shuffleArray(question.options, seed);
