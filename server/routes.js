@@ -35,7 +35,7 @@ router.get("/process-quiz", async (req, res) => {
   console.log('trying');
 
   try {
-    const quizPath = "quiz_bank/other_questions/oq4.json"; // Adjust the path as necessary
+    const quizPath = "quiz_bank/other_questions/oq5.json"; // Adjust the path as necessary
     const quiz = await HttpClient.getQuiz(quizPath);
     const { quizInfo, quizQuestions } = quiz;
 
